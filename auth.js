@@ -160,20 +160,25 @@ onAuthStateChanged(auth, async (user) => {
 
   if (user) {
 
-      // 🔒 BLOQUEIA SE NÃO VERIFICADO
-      if (!user.emailVerified) {
+    // 🔥 FORÇA ATUALIZAÇÃO DO STATUS DO EMAIL
+    await user.reload();
+
+    if (!user.emailVerified) {
       await signOut(auth);
-      alert("Verifique seu email / SPAM antes de acessar.");
+      alert("Verifique seu email antes de acessar.");
       return;
     }
 
     const docSnap = await getDoc(doc(db, "usuarios", user.uid));
 
-    let nomeCompleto = "Usuário";
-
-    if (docSnap.exists()) {
-      nomeCompleto = docSnap.data().nome;
+    if (!docSnap.exists()) {
+      console.log("Documento do usuário não encontrado");
+      return;
     }
+
+    const dados = docSnap.data();
+
+    let nomeCompleto = dados.nome;
 
     areaUsuario.innerHTML = `
       <div class="usuario-box">
@@ -194,6 +199,7 @@ onAuthStateChanged(auth, async (user) => {
   }
 
 });
+
 
 
 
