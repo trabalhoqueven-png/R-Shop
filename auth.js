@@ -134,8 +134,9 @@ btnCadastro.onclick = async () => {
     msg.innerText = "";
 
   } catch (error) {
-    msg.innerText = "Verifique seu email / SPAM antes de fazer login!";
-  }
+  console.log(error);
+  msg.innerText = error.message;
+}
  
 
 };
