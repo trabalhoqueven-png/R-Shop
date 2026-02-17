@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendEmailVerification,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
@@ -64,13 +65,31 @@ cpf.addEventListener("input", () => {
 // LOGIN
 btnLogin.onclick = async () => {
   try {
-    await signInWithEmailAndPassword(auth, email.value, senha.value);
+
+    const cred = await signInWithEmailAndPassword(
+      auth,
+      email.value,
+      senha.value
+    );
+
+    // 🔒 SE NÃO VERIFICOU EMAIL
+    if (!cred.user.emailVerified) {
+
+      msg.innerText = "Verifique seu email antes de entrar!";
+      await signOut(auth);
+      return;
+
+    }
+
     modal.style.display = "none";
+    document.body.classList.remove("modal-aberto");
     msg.innerText = "";
+
   } catch {
     msg.innerText = "❌ Email ou senha inválidos";
   }
 };
+
 
 // CADASTRO
 btnCadastro.onclick = async () => {
@@ -99,22 +118,25 @@ btnCadastro.onclick = async () => {
       email.value,
       senha.value
     );
+    await sendEmailVerification(cred.user);
 
     await setDoc(doc(db, "usuarios", cred.user.uid), {
-      nome: nome.value,
-      idade: idadeNumero,
-      cpf: cpf.value,
-      email: email.value,
-      criadoEm: serverTimestamp()
-    });
+    nome: nome.value,
+    idade: idadeNumero,
+    cpf: cpf.value,
+    email: email.value,
+    role: "user",
+    criadoEm: serverTimestamp()
+});
 
     modal.style.display = "none";
     document.body.classList.remove("modal-aberto");
     msg.innerText = "";
 
   } catch (error) {
-    msg.innerText = error.message;
+    msg.innerText = "Verifique seu email / SPAM antes de fazer login!";
   }
+ 
 
 };
 
@@ -137,6 +159,13 @@ idade.addEventListener("input", () => {
 onAuthStateChanged(auth, async (user) => {
 
   if (user) {
+
+      // 🔒 BLOQUEIA SE NÃO VERIFICADO
+      if (!user.emailVerified) {
+      await signOut(auth);
+      alert("Verifique seu email / SPAM antes de acessar.");
+      return;
+    }
 
     const docSnap = await getDoc(doc(db, "usuarios", user.uid));
 
