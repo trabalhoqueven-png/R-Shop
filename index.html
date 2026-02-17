@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loja Da Rebeca😍</title>
+<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+<header class="header">
+  <h1>Loja da Rebeca😍</h1>
+
+  <div id="areaUsuario">
+    <button id="btnEntrar">Entrar</button>
+  </div>
+</header>
+
+<!-- PRODUTOS -->
+<section class="produtos">
+
+  <div class="card">
+    <img src="192.png">
+    <h3>Produto 1</h3>
+    <p>R$ 199</p>
+    <a href="https://seulinkafiliado.com" target="_blank">Comprar</a>
+  </div>
+
+  <div class="card">
+    <img src="192.png">
+    <h3>Produto 2</h3>
+    <p>R$ 299</p>
+    <a href="https://seulinkafiliado.com" target="_blank">Comprar</a>
+  </div>
+
+</section>
+
+<!-- MODAL LOGIN -->
+<div class="modal" id="modalLogin">
+  <div class="modal-box">
+    <h2>Fazer Conta</h2>
+
+    <input id="nome" type="text" placeholder="Nome completo">
+    <input id="idade" type="number" placeholder="Idade"min="18"max="80" inputmode="numeric">
+    <input id="cpf" type="text" placeholder="CPF"maxlength="11"inputmode="numeric"pattern="\d*">
+    <p>FazerLogin/Cadastro...</p>
+    <input id="email" type="email" placeholder="Email">
+    <input id="senha" type="password" placeholder="Senha">
+
+    <button id="btnLogin">Login</button>
+    <button id="btnCadastro">Cadastrar</button>
+
+    <p id="msg"></p>
+  </div>
+</div>
+
+<script type="module" src="auth.js"></script>
+</body>
+</html>
