@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", () => {
   onAuthStateChanged(auth, async (user) => {
 
     if (!user && window.location.pathname.includes("Home.html")) {
-      window.location.href = "index.html";
+      window.location.replace = ("index.html");
       return;
     }
 
