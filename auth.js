@@ -1,6 +1,8 @@
 import { auth, db } from "./firebase.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
 import {
+  onAuthStateChanged,
+  signOut,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendEmailVerification
@@ -8,21 +10,84 @@ import {
 
 import {
   doc,
+  getDoc,
   setDoc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+
+// ELEMENTOS
+const userNome = document.getElementById("userNome");
+const userEmail = document.getElementById("userEmail");
+const btnSair = document.getElementById("btnSair");
+
 const email = document.getElementById("email");
 const senha = document.getElementById("senha");
 const msg = document.getElementById("msg");
-const btnSair = document.getElementById("btnSair");
 const modal = document.getElementById("modalLogin");
 
-document.addEventListener("click", (e) => {
-  if (e.target.id === "btnEntrar") {
-    modal.style.display = "flex";
-  }
+const btnLogin = document.getElementById("btnLogin");
+const btnCadastro = document.getElementById("btnCadastro");
+
+let usuarioLogado = false;
+let usuarioRole = null;
+
+
+// 🔐 CONTROLE GLOBAL DE LOGIN
+window.addEventListener("DOMContentLoaded", () => {
+
+  onAuthStateChanged(auth, async (user) => {
+
+    if (!user && window.location.pathname.includes("Home.html")) {
+      window.location.href = "index.html";
+      return;
+    }
+
+    if (user) {
+
+      console.log("Usuário logado:", user.uid);
+
+      const docRef = doc(db, "usuarios", user.uid);
+      const docSnap = await getDoc(docRef);
+
+      console.log("Documento Firestore:", docSnap.data());
+
+      if (docSnap.exists()) {
+
+        if (userNome) userNome.innerText = docSnap.data().nome;
+        if (userEmail) userEmail.innerText = user.email;
+
+      } else {
+        console.log("Documento não encontrado");
+      }
+
+    }
+
+  });
+
 });
+
+
+
+// 🔒 Atualiza bloqueio de links
+function atualizarLinks() {
+
+  const links = document.querySelectorAll(".card a");
+
+  links.forEach(link => {
+
+    if (!usuarioLogado) {
+      link.style.pointerEvents = "none";
+      link.style.opacity = "0.5";
+    } else {
+      link.style.pointerEvents = "auto";
+      link.style.opacity = "1";
+    }
+
+  });
+
+}
+
 
 // 🚪 SAIR
 if (btnSair) {
@@ -32,24 +97,37 @@ if (btnSair) {
   };
 }
 
-// 🔒 PROTEGER HOME
-if (window.location.pathname.includes("Home.html")) {
 
-  onAuthStateChanged(auth, (user) => {
+// 🔓 ABRIR MODAL LOGIN
+document.addEventListener("click", (e) => {
+  if (e.target.id === "btnEntrar" && modal) {
+    modal.style.display = "flex";
+  }
+});
 
-    if (!user) {
-      window.location.href = "index.html"; // bloqueia acesso
-    }
 
-  });
+// 🔒 BLOQUEAR COMPRA SE NÃO LOGADO
+document.addEventListener("click", (e) => {
 
-}
+  const link = e.target.closest(".card a");
+
+  if (link && !usuarioLogado) {
+
+    e.preventDefault();
+
+    if (modal) modal.style.display = "flex";
+    if (msg) msg.innerText = "Faça login para comprar.";
+
+  }
+
+});
+
 
 // 🔵 LOGIN
-const btnLogin = document.getElementById("btnLogin");
-
 if (btnLogin) {
+
   btnLogin.onclick = async () => {
+
     try {
 
       const cred = await signInWithEmailAndPassword(
@@ -63,17 +141,18 @@ if (btnLogin) {
         return;
       }
 
-      window.location.replace("Home.html");// página principal
+      window.location.replace("Home.html");
 
     } catch {
       msg.innerText = "Email ou senha inválidos";
     }
+
   };
+
 }
 
-// 🟢 CADASTRO
-const btnCadastro = document.getElementById("btnCadastro");
 
+// 🟢 CADASTRO
 if (btnCadastro) {
 
   const nome = document.getElementById("nome");
@@ -107,7 +186,7 @@ if (btnCadastro) {
         idade: parseInt(idade.value),
         cpf: cpf.value,
         email: email.value,
-        role: "user",
+        role: "user", // 🔥 aqui define padrão como user
         criadoEm: serverTimestamp()
       });
 
@@ -119,10 +198,11 @@ if (btnCadastro) {
     }
 
   };
+
 }
 
 
-
+// 🚀 PWA
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js")
     .then(() => console.log("PWA pronta 🔥"))

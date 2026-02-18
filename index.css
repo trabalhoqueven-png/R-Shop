@@ -142,3 +142,11 @@ body {
     padding: 15px;
   }
 }
+.card a.bloqueado {
+  background: gray;
+  pointer-events: none;
+  opacity: 0.6;
+}
+.usuario-info strong {
+  color: #00a884;
+}
