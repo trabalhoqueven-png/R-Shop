@@ -120,3 +120,11 @@ if (btnCadastro) {
 
   };
 }
+
+
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("PWA pronta 🔥"))
+    .catch(err => console.log(err));
+}
