@@ -1,5 +1,5 @@
 import { auth, db } from "./firebase.js";
-
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -15,7 +15,7 @@ import {
 const email = document.getElementById("email");
 const senha = document.getElementById("senha");
 const msg = document.getElementById("msg");
-
+const btnSair = document.getElementById("btnSair");
 const modal = document.getElementById("modalLogin");
 
 document.addEventListener("click", (e) => {
@@ -23,6 +23,27 @@ document.addEventListener("click", (e) => {
     modal.style.display = "flex";
   }
 });
+
+// 🚪 SAIR
+if (btnSair) {
+  btnSair.onclick = async () => {
+    await signOut(auth);
+    window.location.href = "index.html";
+  };
+}
+
+// 🔒 PROTEGER HOME
+if (window.location.pathname.includes("Home.html")) {
+
+  onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+      window.location.href = "index.html"; // bloqueia acesso
+    }
+
+  });
+
+}
 
 // 🔵 LOGIN
 const btnLogin = document.getElementById("btnLogin");
@@ -42,7 +63,7 @@ if (btnLogin) {
         return;
       }
 
-      window.location.href = "Home.html"; // página principal
+      window.location.replace("Home.html");// página principal
 
     } catch {
       msg.innerText = "Email ou senha inválidos";
