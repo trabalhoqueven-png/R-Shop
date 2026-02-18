@@ -16,6 +16,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 
+const btnInstalar = document.getElementById("btnInstalar");
 // ELEMENTOS
 const userNome = document.getElementById("userNome");
 const userEmail = document.getElementById("userEmail");
@@ -31,7 +32,7 @@ const btnCadastro = document.getElementById("btnCadastro");
 
 let usuarioLogado = false;
 let usuarioRole = null;
-
+let deferredPrompt;
 
 // 🔐 CONTROLE GLOBAL DE LOGIN
 window.addEventListener("DOMContentLoaded", () => {
@@ -241,3 +242,30 @@ if ("serviceWorker" in navigator) {
     .then(() => console.log("PWA pronta 🔥"))
     .catch(err => console.log(err));
 }
+
+// 📲 INSTALAR PWA
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (btnInstalar) {
+    btnInstalar.style.display = "inline-block";
+  }
+});
+
+if (btnInstalar) {
+  btnInstalar.addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+
+    if (outcome === "accepted") {
+      console.log("Usuário instalou o app ✅");
+    }
+
+    deferredPrompt = null;
+    btnInstalar.style.display = "none";
+  });
+}
+
