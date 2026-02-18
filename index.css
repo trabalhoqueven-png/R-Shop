@@ -10,6 +10,21 @@ body {
   color: #333;
 }
 
+#btnInstalar {
+  background: #00a884;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+#btnInstalar:hover {
+  opacity: 0.8;
+}
+
+
 /* HEADER */
 .header {
   display: flex;
