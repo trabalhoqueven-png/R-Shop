@@ -1,12 +1,13 @@
 self.addEventListener("install", (e) => {
   e.waitUntil(
     caches.open("loja-cache").then((cache) => {
-      return Promise.all([
-        cache.add("index.html"),
-        cache.add("Home.html"),
-        cache.add("index.css"),
-        cache.add("auth.js"),
-        cache.add("192.png")
+      return cache.addAll([
+        "/",
+        "index.html",
+        "Home.html",
+        "index.css",
+        "auth.js",
+        "192.png"
       ]);
     })
   );
