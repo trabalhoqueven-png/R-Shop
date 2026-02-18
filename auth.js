@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", () => {
   onAuthStateChanged(auth, async (user) => {
 
     if (!user && window.location.pathname.includes("Home.html")) {
-      window.location.replace = ("index.html");
+      window.location.replace ("index.html");
       return;
     }
 
@@ -93,7 +93,7 @@ function atualizarLinks() {
 if (btnSair) {
   btnSair.onclick = async () => {
     await signOut(auth);
-    window.location.replace = ("index.html");
+    window.location.replace("index.html");
   };
 }
 
@@ -221,7 +221,7 @@ if (btnCadastro) {
     });
 
     alert("Conta criada! Verifique seu email.");
-    window.location.replace = ("index.html");
+    window.location.replace("index.html");
 
   } catch (error) {
 
