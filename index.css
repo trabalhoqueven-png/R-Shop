@@ -6,24 +6,15 @@
 }
 
 body {
-  background: #f5f6fa;
-  color: #333;
+  background: #f8f6f2; /* Bege claro elegante */
+  color: #3a3a3a;
 }
 
-#btnInstalar {
-  background: #00a884;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-left: 8px;
+/* LOGO */
+.logo {
+  height: 100px;
+  object-fit: contain;
 }
-
-#btnInstalar:hover {
-  opacity: 0.8;
-}
-
 
 /* HEADER */
 .header {
@@ -31,8 +22,8 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -40,36 +31,44 @@ body {
 
 .header h1 {
   font-size: 20px;
-  color: #00a884;
+  color: #b76e79; /* Rosé sofisticado */
 }
 
-.header button {
+/* BOTÕES */
+.header button,
+#btnInstalar {
   padding: 8px 15px;
   border-radius: 8px;
   border: none;
-  background: #00a884;
+  background: #b76e79; /* Rosé */
   color: white;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.header button:hover,
+#btnInstalar:hover {
+  background: #9e5c66;
 }
 
 /* PRODUTOS */
 .produtos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  gap: 25px;
   padding: 30px;
 }
 
 .card {
-  background: white;
-  border-radius: 12px;
+  background: #ffffff;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
   transition: 0.3s;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
 }
 
 .card img {
@@ -79,30 +78,38 @@ body {
 }
 
 .card h3 {
-  padding: 10px;
+  padding: 12px;
   font-size: 16px;
+  color: #333;
 }
 
 .card p {
-  padding: 0 10px;
+  padding: 0 12px;
   font-weight: bold;
-  color: #00a884;
+  color: #b76e79; /* Rosé */
 }
 
 .card a {
   display: block;
-  margin: 10px;
+  margin: 12px;
   padding: 10px;
-  background: #00a884;
+  background: #b76e79;
   color: white;
   text-align: center;
   text-decoration: none;
   border-radius: 8px;
-  transition: 0.2s;
+  transition: 0.3s;
 }
 
 .card a:hover {
-  background: #008f72;
+  background: #9e5c66;
+}
+
+/* LINK BLOQUEADO */
+.card a.bloqueado {
+  background: gray;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 /* MODAL */
@@ -118,28 +125,36 @@ body {
 .modal-box {
   background: white;
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 15px;
   width: 90%;
   max-width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .modal-box input {
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   border-radius: 8px;
   border: 1px solid #ddd;
+  width: 100%;
 }
 
 .modal-box button {
   padding: 10px;
   border-radius: 8px;
   border: none;
-  background: #00a884;
+  background: #b76e79;
   color: white;
   cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.modal-box button:hover {
+  background: #9e5c66;
 }
 
 #msg {
@@ -148,26 +163,10 @@ body {
   color: red;
 }
 
-/* RESPONSIVO */
-@media (max-width: 768px) {
-  .header {
-    padding: 15px;
-  }
-
-  .produtos {
-    padding: 15px;
-  }
-}
-.card a.bloqueado {
-  background: gray;
-  pointer-events: none;
-  opacity: 0.6;
-}
+/* USUARIO INFO */
 .usuario-info strong {
-  color: #00a884;
+  color: #b76e79;
 }
-
-
 
 /* LOADING */
 .loading {
@@ -188,8 +187,8 @@ body {
 .spinner {
   width: 50px;
   height: 50px;
-  border: 5px solid #ccc;
-  border-top: 5px solid #00a884;
+  border: 5px solid #eee;
+  border-top: 5px solid #b76e79;
   border-radius: 50%;
   animation: girar 1s linear infinite;
   margin-bottom: 15px;
@@ -198,4 +197,19 @@ body {
 @keyframes girar {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px;
+  }
+
+  .produtos {
+    padding: 15px;
+  }
+
+  .logo {
+    height: 80px;
+  }
 }

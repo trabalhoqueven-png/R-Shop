@@ -1,10 +1,11 @@
 {
   "name": "Loja da Rebeca",
-  "short_name": "LojaRebeca",
+  "short_name": "Rebeca",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#00a884",
+  "background_color": "#f8f6f2",
+  "theme_color": "#b76e79",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "192.png",
