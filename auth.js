@@ -232,8 +232,7 @@ if (btnCadastro) {
   }
 
 };
-
-
+  
 }
 
 // 🚀 PWA
