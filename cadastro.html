@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro - Loja da Rebeca</title>
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="modal" style="display:flex;">
+  <div class="modal-box">
+    <h2>Criar Conta</h2>
+
+    <input id="nome" type="text" placeholder="Nome completo">
+    <input id="idade" type="number" placeholder="Idade" min="18" max="100">
+    <input id="cpf" type="text" placeholder="CPF" maxlength="11">
+    <input id="email" type="email" placeholder="Email">
+    <input id="senha" type="password" placeholder="Senha">
+
+    <button id="btnCadastro">Cadastrar</button>
+
+    <p>
+      Já tem conta?
+      <a href="index.html">Fazer login</a>
+    </p>
+
+    <p id="msg"></p>
+  </div>
+</div>
+
+<script type="module" src="auth.js"></script>
+</body>
+</html>
