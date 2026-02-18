@@ -16,7 +16,7 @@
 
     <input id="nome" type="text" placeholder="Nome completo">
     <input id="idade" type="number" placeholder="Idade" min="18" max="100">
-    <input id="cpf" type="text" placeholder="CPF" maxlength="11">
+    <input id="cpf" type="text" placeholder="CPF (somente números)"maxlength="11"inputmode="numeric"pattern="[0-9]*">
     <input id="email" type="email" placeholder="Email">
     <input id="senha" type="password" placeholder="Senha">
 
@@ -32,5 +32,11 @@
 </div>
 
 <script type="module" src="auth.js"></script>
+<!-- TELA DE CARREGAMENTO -->
+<div id="loading" class="loading">
+  <div class="spinner"></div>
+  <p>Criando sua conta...</p>
+</div>
+
 </body>
 </html>

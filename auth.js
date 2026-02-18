@@ -93,7 +93,7 @@ function atualizarLinks() {
 if (btnSair) {
   btnSair.onclick = async () => {
     await signOut(auth);
-    window.location.href = "index.html";
+    window.location.replace = ("index.html");
   };
 }
 
@@ -161,46 +161,80 @@ if (btnCadastro) {
 
   btnCadastro.onclick = async () => {
 
-    if (!nome.value || !idade.value || !cpf.value) {
-      msg.innerText = "Preencha todos os campos";
-      return;
-    }
+  const loading = document.getElementById("loading");
+  const idadeNumero = parseInt(idade.value);
 
-    if (cpf.value.length !== 11) {
-      msg.innerText = "CPF deve ter 11 números";
-      return;
-    }
+  // 🔒 Nome obrigatório
+  if (!nome.value.trim()) {
+    msg.innerText = "Digite seu nome completo.";
+    return;
+  }
 
-    try {
+  // 🔒 Idade obrigatória
+  if (!idadeNumero) {
+    msg.innerText = "Digite sua idade.";
+    return;
+  }
 
-      const cred = await createUserWithEmailAndPassword(
-        auth,
-        email.value,
-        senha.value
-      );
+  if (idadeNumero < 18) {
+    msg.innerText = "Você precisa ter pelo menos 18 anos.";
+    return;
+  }
 
-      await sendEmailVerification(cred.user);
+  if (idadeNumero > 100) {
+    msg.innerText = "Idade inválida.";
+    return;
+  }
 
-      await setDoc(doc(db, "usuarios", cred.user.uid), {
-        nome: nome.value,
-        idade: parseInt(idade.value),
-        cpf: cpf.value,
-        email: email.value,
-        role: "user", // 🔥 aqui define padrão como user
-        criadoEm: serverTimestamp()
-      });
+  // 🔒 CPF obrigatório
+  if (!cpf.value) {
+    msg.innerText = "Digite seu CPF.";
+    return;
+  }
 
-      alert("Conta criada! Verifique seu email.");
-      window.location.href = "index.html";
+  if (!/^\d{11}$/.test(cpf.value)) {
+    msg.innerText = "CPF deve conter exatamente 11 números.";
+    return;
+  }
 
-    } catch (error) {
-      msg.innerText = error.message;
-    }
+  // ✅ AGORA SIM ATIVA O LOADING
+  loading.style.display = "flex";
+  btnCadastro.disabled = true;
 
-  };
+  try {
+
+    const cred = await createUserWithEmailAndPassword(
+      auth,
+      email.value,
+      senha.value
+    );
+
+    await sendEmailVerification(cred.user);
+
+    await setDoc(doc(db, "usuarios", cred.user.uid), {
+      nome: nome.value.trim(),
+      idade: idadeNumero,
+      cpf: cpf.value,
+      email: email.value,
+      role: "user",
+      criadoEm: serverTimestamp()
+    });
+
+    alert("Conta criada! Verifique seu email.");
+    window.location.replace = ("index.html");
+
+  } catch (error) {
+
+    msg.innerText = error.message;
+    loading.style.display = "none";
+    btnCadastro.disabled = false;
+
+  }
+
+};
+
 
 }
-
 
 // 🚀 PWA
 if ("serviceWorker" in navigator) {
