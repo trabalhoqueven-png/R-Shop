@@ -28,6 +28,7 @@ const msg = document.getElementById("msg");
 const modal = document.getElementById("modalLogin");
 
 const btnLogin = document.getElementById("btnLogin");
+const loading = document.getElementById("loading");  // Tela de carregamento
 const btnCadastro = document.getElementById("btnCadastro");
 
 let usuarioLogado = false;
@@ -128,7 +129,7 @@ document.addEventListener("click", (e) => {
 if (btnLogin) {
 
   btnLogin.onclick = async () => {
-
+  loading.style.display = "flex";
     try {
 
       const cred = await signInWithEmailAndPassword(
@@ -139,13 +140,15 @@ if (btnLogin) {
 
       if (!cred.user.emailVerified) {
         msg.innerText = "Verifique seu email antes de entrar!";
+        loading.style.display = "none";  // Esconde o loading após a verificação
         return;
       }
 
       window.location.replace("Home.html");
 
-    } catch {
+    } catch (error) {
       msg.innerText = "Email ou senha inválidos";
+      loading.style.display = "none";  // Esconde o loading em caso de erro
     }
 
   };
