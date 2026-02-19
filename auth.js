@@ -271,4 +271,3 @@ if (btnInstalar) {
     btnInstalar.style.display = "none";
   });
 }
-
