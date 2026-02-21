@@ -2,46 +2,27 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#b76e79">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadastro - Loja da Rebeca</title>
-<link rel="stylesheet" href="index.css">
+<title>Cadastro por Telefone</title>
 </head>
 <body>
 
-<div class="modal" style="display:flex;">
-  <div class="modal-box">
-    <h2>Criar Conta</h2>
+<h2>Criar Conta</h2>
 
-    <input id="nome" type="text" placeholder="Nome completo">
-    <input id="idade" type="number" placeholder="Idade" min="18" max="100">
-    <input id="cpf" type="text" placeholder="CPF (somente números)"maxlength="11"inputmode="numeric"pattern="[0-9]*">
-    <input id="telefone" type="tel" placeholder="+55 64999999999">
-    <input id="codigo" type="text" placeholder="Código SMS">
-    <button id="btnEnviarCodigo">Enviar Código</button>
-    <button id="btnConfirmarCodigo">Confirmar Código</button>
+<input id="nome" type="text" placeholder="Nome completo">
+<input id="idade" type="number" placeholder="Idade" min="18">
+<input id="cpf" type="text" placeholder="CPF (somente números)" maxlength="11">
+<input id="telefone" type="tel" placeholder="+5564999999999">
+<input id="codigo" type="text" placeholder="Código SMS">
 
 <div id="recaptcha-container"></div>
 
-    <button id="btnCadastro">Cadastrar</button>
+<button id="btnEnviarCodigo">Enviar Código</button>
+<button id="btnConfirmarCodigo">Confirmar Código</button>
 
-    <p>
-      Já tem conta?
-      <a href="index.html">Fazer login</a>
-    </p>
+<p id="msg"></p>
 
-    <p id="msg"></p>
-  </div>
-</div>
-
-<script type="module" src="auth.js"></script>
-<!-- TELA DE CARREGAMENTO -->
-<div id="loading" class="loading">
-  <div class="spinner"></div>
-  <p>Criando sua conta...</p>
-</div>
+<script type="module" src="telefone.js"></script>
 
 </body>
-
 </html>
