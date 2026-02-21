@@ -17,8 +17,12 @@
     <input id="nome" type="text" placeholder="Nome completo">
     <input id="idade" type="number" placeholder="Idade" min="18" max="100">
     <input id="cpf" type="text" placeholder="CPF (somente números)"maxlength="11"inputmode="numeric"pattern="[0-9]*">
-    <input id="email" type="email" placeholder="Email">
-    <input id="senha" type="password" placeholder="Senha">
+    <input id="telefone" type="tel" placeholder="+55 64999999999">
+    <input id="codigo" type="text" placeholder="Código SMS">
+    <button id="btnEnviarCodigo">Enviar Código</button>
+    <button id="btnConfirmarCodigo">Confirmar Código</button>
+
+<div id="recaptcha-container"></div>
 
     <button id="btnCadastro">Cadastrar</button>
 
@@ -39,4 +43,5 @@
 </div>
 
 </body>
+
 </html>
